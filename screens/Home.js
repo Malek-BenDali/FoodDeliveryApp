@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity, Image, FlatList, StyleSheet } from 'react-native'
 import { COLORS, icons, SIZES, images, FONTS } from '../constants'
-import { restaurantData, categoryData } from '../Data/RestaurantData'
+import { restaurantData } from '../Data/RestaurantData'
+import { categoryData } from '../Data/CategoryData'
 import {Category, HeaderHome, RestaurantList} from './components'
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
     const [categories, setCategories] = useState(categoryData)
     const [selectedCategory, setSelectedCategory] = useState(null)
     const [restaurants, setRestaurants] = useState(restaurantData)
+    
 
     const onSelectCategory = category =>{
         let restaurantList = restaurantData.filter(retaurant => retaurant.categories.includes(category.id))
@@ -19,6 +21,12 @@ const Home = () => {
         setSelectedCategory(category)
     }
     
+     const getCategoryNameById = id =>{
+        const category  = categories.filter(category => category.id == id)
+        if(category.length>0)
+            return category[0].name
+        return ""
+     }
 
     return (
         <SafeAreaView style={styles.container} >
@@ -28,7 +36,9 @@ const Home = () => {
             selectedCategory={selectedCategory}
             shadow={styles.shadow}
             />
-            <RestaurantList shadow={styles.shadow} />
+            <RestaurantList
+            getCategoryNameById={getCategoryNameById}
+            shadow={styles.shadow} />
         </SafeAreaView>
     )
 }

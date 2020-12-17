@@ -1,59 +1,97 @@
 import React from 'react'
 import { View, Text, FlatList, TouchableOpacity, Image  } from 'react-native'
-import { COLORS, FONTS, SIZES } from '../../constants'
+import { COLORS, FONTS, icons, SIZES } from '../../constants'
 import {restaurantData} from '../../Data/RestaurantData'
 
-const RestaurantList = ({shadow}) => {
 
-    const renderItem = ({item}) => {
-        return (
-            <TouchableOpacity
-                style={{
-                    marginBottom : SIZES.padding * 2 
-                }}
-            >
-                <View style={{marginBottom : SIZES.padding}}>
-                    <View>
-                        <Image
-                            source={item.photo}
-                            resizeMode='cover'
-                            style={{
-                                width : "100%",
-                                height : 200,
-                                borderRadius : SIZES.radius}}
-                        />
-                    </View>
-                    <View
+const RestaurantList = ({getCategoryNameById,shadow }) => {
+
+
+    const renderItem = ({item}) => (
+        <TouchableOpacity
+            style={{
+                marginBottom : SIZES.padding * 2 
+            }}
+        >
+            <View style={{marginBottom : SIZES.padding}}>
+                <View>
+                    <Image
+                        source={item.photo}
+                        resizeMode='cover'
                         style={{
-                            position : 'absolute',
-                            bottom:0,
-                            height:50,
-                            width: SIZES.width *0.35,
-                            backgroundColor: COLORS.white,
-                            borderTopRightRadius: SIZES.radius,
-                            borderBottomLeftRadius : SIZES.radius,
-                            alignItems : "center",
-                            justifyContent : "center",
-                            ...shadow
-                        }}
-                    >
-                        <Text style={{...FONTS.h4}} > {item.duration} </Text>
-                    </View>
+                            width : "100%",
+                            height : 200,
+                            borderRadius : SIZES.radius}}
+                    />
                 </View>
-                {/* Restaurant info */}
-                <Text style={{ ...FONTS.body2}} > {item.name} </Text>
-                {/* rating */}
                 <View
                     style={{
-                        marginTop: SIZES.padding,
-                        flexDirection : "row"
+                        position : 'absolute',
+                        bottom:0,
+                        height:50,
+                        width: SIZES.width *0.35,
+                        backgroundColor: COLORS.white,
+                        borderTopRightRadius: SIZES.radius,
+                        borderBottomLeftRadius : SIZES.radius,
+                        alignItems : "center",
+                        justifyContent : "center",
+                        ...shadow
                     }}
                 >
-
+                    <Text style={{...FONTS.h4}} > {item.duration} </Text>
                 </View>
-            </TouchableOpacity>
-        )
-    }
+            </View>
+            {/* Restaurant info */}
+            <Text style={{ ...FONTS.body2}} > {item.name} </Text>
+            {/* rating */}
+            <View
+                style={{
+                    marginTop: SIZES.padding,
+                    flexDirection : "row"
+                }}
+            >
+                <Image 
+                    source={icons.star}
+                    style={{
+                        height : 20,
+                        width : 20,
+                        tintColor : COLORS.primary,
+                        marginRight : 10,
+                    }}
+                />
+                <Text style={{...FONTS.body3}}> {item.rating} </Text>
+                {/* categories */}
+                <View
+                    style={{
+                        flexDirection : "row",
+                        marginLeft : 10
+                    }}
+                >
+                    {item.categories.map(categoryId=>(
+                        <View
+                        style={{flexDirection:'row'}}
+                        key={categoryId}
+                        >
+                            <Text 
+                                style={{ ...FONTS.body3}}
+                            > 
+                                {getCategoryNameById(categoryId)}  
+                            </Text>
+                            <Text
+                                style={{...FONTS.h3,
+                                color: COLORS.darkgray,
+                                marginHorizontal: 5
+                                }}
+                            >
+                                . 
+                            </Text>
+                        </View>
+                    ))}
+                </View>
+            </View>
+        </TouchableOpacity>
+    )
+    
 
     return (
         <FlatList
