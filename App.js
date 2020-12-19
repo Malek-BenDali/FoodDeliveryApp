@@ -2,7 +2,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Home , Restaurant , OrderDelivery } from './screens'
+import { Restaurant , OrderDelivery } from './screens'
 import { StyleSheet, Text, View } from 'react-native';
 import Tabs from './navigation/Tabs'
 
@@ -16,6 +16,7 @@ export default function App() {
         screenOptions={{
           headerShown : false
         }}
+        initialRouteName={"Home"}
       >
         <Stack.Screen name="Home" component={Tabs} />
         <Stack.Screen name="Restaurant" component={Restaurant} />

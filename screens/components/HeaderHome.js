@@ -2,15 +2,8 @@ import React, {useState} from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { COLORS, icons, SIZES, images, FONTS } from '../../constants'
 
-const HeaderHome = () =>{
-    const initialLocatin = {
-        streetName :"Sousse",
-        gps : {
-            latitude : 35.82556,
-            longitude : 10.64111
-        }
-    }
-    const [currentLocation, setCurrentLocation] = useState(initialLocatin)
+const HeaderHome = (currentLocation) =>{
+
     return(   
         <View style={{flexDirection : 'row', height: 50}} >
             <TouchableOpacity
@@ -41,7 +34,7 @@ const HeaderHome = () =>{
                         borderRadius : SIZES.radius
                     }}
                 >
-                    <Text style={{fontSize:21}} > {currentLocation.streetName} </Text>
+                    <Text style={{fontSize:21}} > {currentLocation.currentLocation.streetName} </Text>
                 </View>        
             </View>
             <TouchableOpacity

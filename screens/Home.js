@@ -5,11 +5,17 @@ import { restaurantData } from '../Data/RestaurantData'
 import { categoryData } from '../Data/CategoryData'
 import {Category, HeaderHome, RestaurantList} from './components'
 
-const Home = () => {
+const Home = (props) => {
 
+    const initialLocatin = {
+        streetName :"Sousse",
+        gps : {
+            latitude : 35.82556,
+            longitude : 10.64111
+        }
+    }
 
-    
-
+    const [currentLocation, setCurrentLocation] = useState(initialLocatin)
     const [categories, setCategories] = useState(categoryData)
     const [selectedCategory, setSelectedCategory] = useState(null)
     const [restaurants, setRestaurants] = useState(restaurantData)
@@ -30,15 +36,21 @@ const Home = () => {
 
     return (
         <SafeAreaView style={styles.container} >
-            <HeaderHome/>
+            <HeaderHome
+                currentLocation={currentLocation}
+            />
             <Category 
-            onSelectCategory={onSelectCategory} 
-            selectedCategory={selectedCategory}
-            shadow={styles.shadow}
+                onSelectCategory={onSelectCategory} 
+                selectedCategory={selectedCategory}
+                shadow={styles.shadow}
             />
             <RestaurantList
-            getCategoryNameById={getCategoryNameById}
-            shadow={styles.shadow} />
+                restaurants={restaurants}
+                getCategoryNameById={getCategoryNameById}
+                shadow={styles.shadow}
+                currentLocation={currentLocation}
+                {...props} 
+            />
         </SafeAreaView>
     )
 }

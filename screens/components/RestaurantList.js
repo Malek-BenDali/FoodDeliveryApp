@@ -1,17 +1,16 @@
 import React from 'react'
 import { View, Text, FlatList, TouchableOpacity, Image  } from 'react-native'
 import { COLORS, FONTS, icons, SIZES } from '../../constants'
-import {restaurantData} from '../../Data/RestaurantData'
 
 
-const RestaurantList = ({getCategoryNameById,shadow }) => {
-
+const RestaurantList = ({navigation, getCategoryNameById, shadow, restaurants, currentLocation }) => {
 
     const renderItem = ({item}) => (
         <TouchableOpacity
             style={{
                 marginBottom : SIZES.padding * 2 
             }}
+            onPress={()=>navigation.navigate("Restaurant",{item, currentLocation})}
         >
             <View style={{marginBottom : SIZES.padding}}>
                 <View>
@@ -87,6 +86,19 @@ const RestaurantList = ({getCategoryNameById,shadow }) => {
                             </Text>
                         </View>
                     ))}
+
+                    {/* price */}
+                    {[1,2,3].map((priceRating,index)=>(
+                        <Text
+                            key={index}
+                            style={{
+                                ...FONTS.body3,
+                                color:(priceRating <= item.priceRating)? COLORS.black : COLORS.darkgray
+                            }}
+                        >
+                            $
+                        </Text>
+                    ) )}
                 </View>
             </View>
         </TouchableOpacity>
@@ -95,7 +107,7 @@ const RestaurantList = ({getCategoryNameById,shadow }) => {
 
     return (
         <FlatList
-            data={restaurantData}
+            data={restaurants}
             keyExtractor={item => item.id.toString()}
             renderItem={renderItem}
             contentContainerStyle={{
